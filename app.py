@@ -7,6 +7,11 @@ import json
 app = Flask(__name__)
 
 
+@app.route("/")
+def home_view():
+    return "<h1>Welcome to the sports-wiki-app</h>"
+
+
 @app.route('/search')
 def search_wiki():
     # first let's check if parameters are included

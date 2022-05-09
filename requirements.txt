@@ -28,3 +28,4 @@ urllib3==1.26.9
 virtualenv==20.13.0
 Werkzeug==2.0.2
 wikipedia==1.4.0
+gunicorn

@@ -1,3 +1,1 @@
-web: gunicorn wsgi:app 
-
-worker: python wiki-scrapper.py
+web: gunicorn wiki-scrapper:app 

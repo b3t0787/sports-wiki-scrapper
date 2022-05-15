@@ -1,10 +1,12 @@
 # wiki-scrapper.py
 import flask
 from flask import Flask, request
+from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+cors = CORS(app)
 
 
 @app.route("/")
@@ -12,7 +14,7 @@ def home_view():
     return "<h1>Welcome to the sports-wiki</h>"
 
 
-@app.route('/search')
+@app.route('/search', methods=["GET"])
 def search_wiki():
     # first let's check if parameters are included
     if request.args.get('org') is None or request.args.get('team') is None:
@@ -58,8 +60,8 @@ def not_found():
     """
     Will return a json object indicating an error
     """
-    err = {'Error': "Team not found"}
-    return err
+    resp = {'summary': "No content found"}
+    return resp
 
 
 def scrape(response):
@@ -85,7 +87,8 @@ def scrape(response):
 # create a list containing every MLB team so that we can scrape the right article from Wikipedia
 mlb_teams = ["Baltimore Orioles", "Boston Red Sox", "New York Yankees", "Tampa Bay Rays", "Toronto Blue Jays",
              "Chicago White Sox", "Cleveland Guardians", "Detroit Tigers", "Kansas City Royals", "Minnesota Twins",
-             "Houston Astros", "Los Angeles Angels", "Oakland Athletics", "Seattle Mariners", "Texas Rangers (baseball)",
+             "Houston Astros", "Los Angeles Angels", "Oakland Athletics", "Seattle Mariners",
+             "Texas Rangers (baseball)",
              "Atlanta Braves", "Miami Marlins", "New York Mets", "Philadelphia Phillies", "Washington Nationals",
              "Chicago Cubs", "Cincinnati Reds", "Milwaukee Brewers", "Pittsburgh Pirates", "St. Louis Cardinals",
              "Arizona Diamondbacks", "Colorado Rockies", "Los Angeles Dodgers", "San Diego Padres",
